@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forza Gaming — Game reviews, news and community</title>
+  <meta name="description" content="Forza Gaming covers new releases, reviews, esports and hardware. Browse the library, save favorites and follow the stories that matter.">
+  <meta name="theme-color" content="#07070c">
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Forza Gaming">
+  <meta property="og:title" content="Forza Gaming — Game reviews, news and community">
+  <meta property="og:description" content="New releases, reviews, esports and hardware, covered properly.">
+  <meta property="og:image" content="https://picsum.photos/seed/forza-og/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="siteNav"></div>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Featured game">
+      <div class="hero-media" id="heroMedia"></div>
+      <div class="particles" id="particles" aria-hidden="true"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-xl-7" id="heroContent"></div>
+        </div>
+        <div class="hero-dots mt-4" id="heroDots" role="tablist" aria-label="Featured games"></div>
+      </div>
+    </section>
+
+    <!-- AT A GLANCE -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="row g-3">
+          <div class="col-6 col-lg-3"><div class="stat reveal"><div class="num" data-count="1840">0</div><div class="label">Games in the library</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat reveal"><div class="num" data-count="12400">0</div><div class="label">Reviews published</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat reveal"><div class="num" data-count="96">0</div><div class="label">Tournaments tracked</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat reveal"><div class="num" data-count="284000">0</div><div class="label">Community members</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED GAMES -->
+    <section class="section" aria-labelledby="featuredHeading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="rule"></div>
+            <h2 id="featuredHeading">Featured this month</h2>
+            <p class="lead-sm">The releases our editors have actually finished, scored and argued about.</p>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="games.html">Open the full library</a>
+        </div>
+        <div class="row g-3 g-lg-4" id="featuredGames"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section" style="background:linear-gradient(180deg, transparent, rgba(11,12,20,.6), transparent)" aria-labelledby="categoriesHeading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="rule"></div>
+            <h2 id="categoriesHeading">Browse by genre</h2>
+            <p class="lead-sm">Nine ways in. Pick a mood and we will narrow the library for you.</p>
+          </div>
+        </div>
+        <div class="row g-3" id="categoryGrid"></div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section" aria-labelledby="newsHeading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="rule"></div>
+            <h2 id="newsHeading">From the newsroom</h2>
+            <p class="lead-sm">Updates, patches and industry stories, written by people who play the games.</p>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="news.html">All news</a>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7" id="newsLead"></div>
+          <div class="col-lg-5" id="newsRest"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section" aria-labelledby="reviewsHeading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="rule"></div>
+            <h2 id="reviewsHeading">Latest reviews</h2>
+            <p class="lead-sm">Every score comes with the reasons behind it, good and bad.</p>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="reviews.html">All reviews</a>
+        </div>
+        <div class="row g-3 g-lg-4" id="latestReviews"></div>
+      </div>
+    </section>
+
+    <!-- PLATFORMS -->
+    <section class="section" aria-labelledby="platformsHeading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="rule"></div>
+            <h2 id="platformsHeading">Every platform we cover</h2>
+            <p class="lead-sm">Console, PC and mobile libraries, tracked in one place.</p>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="platforms.html">Platform hub</a>
+        </div>
+        <div class="row g-3" id="platformStrip"></div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="glass p-4 p-lg-5 reveal" style="background:linear-gradient(120deg, rgba(139,92,246,.22), rgba(34,211,238,.08))">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+              <div class="rule"></div>
+              <h2 class="mb-2">Boards worth reading</h2>
+              <p class="mb-0">Build threads, spoiler-tagged discussion and hardware advice from people who have actually used the thing. No engagement bait, no ranked karma.</p>
+            </div>
+            <div class="col-lg-5 d-flex flex-wrap gap-2 justify-content-lg-end">
+              <a class="btn btn-neon" href="community.html"><i class="bi bi-chat-square-text me-1"></i>Visit the community</a>
+              <a class="btn btn-ghost" href="register.html">Create an account</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

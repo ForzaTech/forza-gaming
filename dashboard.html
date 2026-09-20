@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — Forza Gaming</title>
+  <meta name="description" content="Your Forza Gaming control panel: overview stats, favorites, saved news, recently viewed titles, notifications and settings. Demo data only.">
+  <meta property="og:title" content="Dashboard — Forza Gaming">
+  <meta property="og:description" content="Your Forza Gaming control panel: overview stats, favorites, saved news, recently viewed titles, notifications and settings. Demo data only.">
+  <meta property="og:image" content="https://picsum.photos/seed/forza-og/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body data-page="dashboard">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="siteNav"></div>
+
+  <main id="main">
+    <div class="container">
+      <div class="dash-shell" id="dashShell">
+
+        <!-- ================= Sidebar ================= -->
+        <aside class="dash-sidebar" id="dashSidebar" aria-label="Dashboard sections">
+          <div class="d-flex align-items-center gap-2 px-2 pb-3 border-bottom" style="border-color:var(--fg-line)!important">
+            <div class="d-flex align-items-center gap-2 w-100" id="dashUser"></div>
+          </div>
+
+          <p class="dash-group-label mb-0">MY ACCOUNT</p>
+          <nav class="d-grid gap-1">
+            <a class="dash-link" href="#overview" data-view="overview"><i class="bi bi-grid-1x2"></i>Overview</a>
+            <a class="dash-link" href="profile.html"><i class="bi bi-person"></i>Public profile</a>
+            <a class="dash-link" href="#favorites" data-view="favorites"><i class="bi bi-heart"></i>Favorites</a>
+            <a class="dash-link" href="#saved" data-view="saved"><i class="bi bi-bookmark"></i>Saved news</a>
+            <a class="dash-link" href="#recent" data-view="recent"><i class="bi bi-clock-history"></i>Recently viewed</a>
+          </nav>
+
+          <p class="dash-group-label mb-0">PREFERENCES</p>
+          <nav class="d-grid gap-1">
+            <a class="dash-link" href="#notifications" data-view="notifications">
+              <i class="bi bi-bell"></i>Notifications
+              <span class="badge-count" id="notifBadge" hidden>0</span>
+            </a>
+            <a class="dash-link" href="#settings" data-view="settings"><i class="bi bi-sliders"></i>Settings</a>
+            <a class="dash-link" href="admin.html" id="dashAdminLink" hidden><i class="bi bi-shield-lock"></i>Admin panel</a>
+            <button class="dash-link border-0 bg-transparent text-start w-100" type="button" data-action="logout">
+              <i class="bi bi-box-arrow-right"></i>Sign out
+            </button>
+          </nav>
+
+          <div class="glass p-3 mt-4 small">
+            <p class="mb-1 fw-semibold" style="color:var(--fg-text)">Demo panel</p>
+            <p class="mb-0 text-dim">Everything on this screen is read from <code>localStorage</code>. There is no server.</p>
+          </div>
+        </aside>
+
+        <!-- ================= Views ================= -->
+        <div>
+
+          <!-- Overview -->
+          <section class="dash-view" id="view-overview" aria-labelledby="h-overview">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-overview">Overview</h2>
+                </div>
+                <a class="btn btn-ghost btn-sm" href="games.html"><i class="bi bi-compass"></i>Discover games</a>
+              </div>
+              <div class="row g-3" id="overviewStats"></div>
+            </div>
+
+            <div class="row g-3 g-lg-4 mt-0">
+              <div class="col-lg-7">
+                <div class="dash-panel h-100">
+                  <h3 class="mb-3">Recent activity</h3>
+                  <div id="overviewActivity"></div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="dash-panel h-100">
+                  <h3 class="mb-3">Picked for you</h3>
+                  <div id="overviewPicks"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Favorites -->
+          <section class="dash-view" id="view-favorites" hidden aria-labelledby="h-favorites">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-favorites">Favorites</h2>
+                  <p class="small text-dim mb-0">Games you hearted anywhere on the site.</p>
+                </div>
+                <button class="btn btn-danger-soft btn-sm" type="button" id="clearFavorites">
+                  <i class="bi bi-trash3"></i>Clear list
+                </button>
+              </div>
+              <div class="row g-3 g-lg-4" id="favoritesGrid"></div>
+            </div>
+          </section>
+
+          <!-- Saved news -->
+          <section class="dash-view" id="view-saved" hidden aria-labelledby="h-saved">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-saved" class="mb-1">Saved news</h2>
+              <p class="small text-dim mb-3">Articles you bookmarked for later reading.</p>
+              <div id="savedNewsList"></div>
+            </div>
+          </section>
+
+          <!-- Recently viewed -->
+          <section class="dash-view" id="view-recent" hidden aria-labelledby="h-recent">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-recent" class="mb-1">Recently viewed</h2>
+              <p class="small text-dim mb-3">The last game pages you opened, newest first.</p>
+              <div id="recentList"></div>
+            </div>
+          </section>
+
+          <!-- Notifications -->
+          <section class="dash-view" id="view-notifications" hidden aria-labelledby="h-notifications">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-notifications">Notifications</h2>
+                  <p class="small text-dim mb-0">Demo alerts about updates, reviews and replies.</p>
+                </div>
+                <button class="btn btn-ghost btn-sm" type="button" id="markAllRead">
+                  <i class="bi bi-check2-all"></i>Mark all read
+                </button>
+              </div>
+              <div class="d-grid gap-2" id="notifList"></div>
+            </div>
+          </section>
+
+          <!-- Settings -->
+          <section class="dash-view" id="view-settings" hidden aria-labelledby="h-settings">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-settings" class="mb-1">Account settings</h2>
+              <p class="small text-dim mb-4">Saved to this browser only. Nothing is uploaded.</p>
+
+              <form id="settingsForm" class="row g-3" novalidate>
+                <div class="col-md-6">
+                  <label class="form-label" for="setUsername">Username</label>
+                  <input class="form-control" type="text" id="setUsername" name="username" autocomplete="username" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="setEmail">Email address</label>
+                  <input class="form-control" type="email" id="setEmail" name="email" autocomplete="email" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="setPlatform">Main platform</label>
+                  <select class="form-select" id="setPlatform" name="platform">
+                    <option>PC</option>
+                    <option>PlayStation 5</option>
+                    <option>Xbox Series X/S</option>
+                    <option>Nintendo Switch</option>
+                    <option>Mobile</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="setDigest">Newsletter digest</label>
+                  <select class="form-select" id="setDigest" name="digest">
+                    <option>Daily</option>
+                    <option selected>Weekly</option>
+                    <option>Only big news</option>
+                    <option>Never</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="setSpoilers">
+                    <label class="form-check-label" for="setSpoilers">Hide spoiler-flagged headlines from my feed</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="setReplies" checked>
+                    <label class="form-check-label" for="setReplies">Notify me about replies to my community posts</label>
+                  </div>
+                </div>
+                <div class="col-12 d-flex gap-2 flex-wrap">
+                  <button class="btn btn-neon" type="submit"><i class="bi bi-check2"></i>Save changes</button>
+                  <button class="btn btn-danger-soft" type="button" data-action="logout"><i class="bi bi-box-arrow-right"></i>Sign out</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

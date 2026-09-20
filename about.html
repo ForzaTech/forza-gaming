@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — Forza Gaming</title>
+  <meta name="description" content="Who makes Forza Gaming, how we score, and the privacy and terms pages for this demo build.">
+  <meta property="og:title" content="About — Forza Gaming">
+  <meta property="og:description" content="Who makes Forza Gaming, how we score, and the privacy and terms pages for this demo build.">
+  <meta property="og:image" content="https://picsum.photos/seed/forza-og/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="siteNav"></div>
+
+  <main id="main">
+    <header class="page-banner">
+      <div class="container">
+        <nav class="crumbs mb-3" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>About</span></nav>
+        <div class="rule"></div>
+        <h1 class="mb-2">About Forza Gaming</h1>
+        <p class="mb-0">A front-end portfolio project built as a full gaming media site.</p>
+      </div>
+    </header>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="glass p-4 p-lg-5 reveal">
+              <h2 class="h4 mb-3">What this is</h2>
+              <p>Forza Gaming is a demonstration project: a complete gaming news and community portal built with HTML5, CSS3, vanilla JavaScript and Bootstrap 5. There is no backend, no database and no build step. Every page is a static file you can open directly in a browser or host on GitHub Pages or Vercel.</p>
+              <p>All games, articles, reviews, tournaments and members are fictional sample data stored in <code>js/data.js</code>. Any resemblance to real products is coincidental.</p>
+
+              <h2 class="h4 mt-5 mb-3">How the demo features work</h2>
+              <ul class="text-muted-fg">
+                <li><strong>Sign in and register</strong> — accounts are written to localStorage in this browser. No password is ever sent anywhere, and none of it is secure. It exists to show the signed-in interface.</li>
+                <li><strong>Favorites and saved articles</strong> — kept in localStorage, so they survive a refresh but not a different device.</li>
+                <li><strong>Dashboard and admin panel</strong> — read and write the same local demo data. The admin panel has a reset button that restores the seeded records.</li>
+                <li><strong>Search, filters and sorting</strong> — run entirely in JavaScript against the in-memory dataset.</li>
+              </ul>
+
+              <h2 class="h4 mt-5 mb-3" id="privacy">Privacy policy</h2>
+              <p>This demo collects nothing. There is no analytics script, no cookie banner and no server to send data to. Anything you type is stored in your own browser's localStorage and can be removed by clearing site data for this domain.</p>
+
+              <h2 class="h4 mt-5 mb-3" id="terms">Terms</h2>
+              <p>The project is provided as-is for portfolio and educational use. Sample imagery is served from picsum.photos. Bootstrap and Bootstrap Icons are used under the MIT licence. Do not reuse the demo authentication pattern in a real product: it stores passwords in plain text on purpose, because nothing here is real.</p>
+
+              <h2 class="h4 mt-5 mb-3" id="contact">Contact</h2>
+              <p class="mb-0">Questions about the build go to <a href="mailto:hello@forza.demo">hello@forza.demo</a>, which is also fictional.</p>
+            </div>
+          </div>
+
+          <aside class="col-lg-4">
+            <div class="glass p-4 mb-4 reveal">
+              <h2 class="h6 mb-3">Built with</h2>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="chip chip-cyan">HTML5</span>
+                <span class="chip chip-violet">CSS3</span>
+                <span class="chip chip-amber">JavaScript</span>
+                <span class="chip chip-green">Bootstrap 5</span>
+                <span class="chip">Bootstrap Icons</span>
+                <span class="chip chip-red">localStorage</span>
+              </div>
+            </div>
+            <div class="glass p-4 mb-4 reveal">
+              <h2 class="h6 mb-3">Demo accounts</h2>
+              <p class="small mb-2">Member</p>
+              <p class="small text-dim mb-3">player@forza.demo · demo1234</p>
+              <p class="small mb-2">Administrator</p>
+              <p class="small text-dim mb-3">admin@forza.demo · admin123</p>
+              <a class="btn btn-neon btn-sm w-100" href="login.html">Go to sign in</a>
+            </div>
+            <div class="glass p-4 reveal">
+              <h2 class="h6 mb-3">The newsroom</h2>
+              <div id="aboutTeam"></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    /* The about page only needs a small author list, so it is built here. */
+    document.addEventListener('DOMContentLoaded', function () {
+      var host = document.getElementById('aboutTeam');
+      if (!host) return;
+      var authors = [];
+      FG_DATA.news.forEach(function (n) { if (authors.indexOf(n.author) === -1) authors.push(n.author); });
+      host.innerHTML = authors.map(function (a) {
+        var count = FG_DATA.news.filter(function (n) { return n.author === a; }).length;
+        return '<div class="d-flex align-items-center gap-3 py-2">' +
+          '<img src="' + FGAuth.avatarFor(a) + '" alt="" class="avatar avatar-sm" loading="lazy">' +
+          '<div><div class="fw-semibold" style="color:var(--fg-text);font-size:.92rem">' + FG.esc(a) + '</div>' +
+          '<div class="small text-dim">' + count + ' stories published</div></div></div>';
+      }).join('');
+    });
+  </script>
+</body>
+</html>

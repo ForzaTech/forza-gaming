@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin panel — Forza Gaming</title>
+  <meta name="description" content="A demo administration panel for Forza Gaming: catalogue, news, member and category management with charts and reports. Frontend simulation only.">
+  <meta property="og:title" content="Admin panel — Forza Gaming">
+  <meta property="og:description" content="A demo administration panel for Forza Gaming: catalogue, news, member and category management with charts and reports. Frontend simulation only.">
+  <meta property="og:image" content="https://picsum.photos/seed/forza-og/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body data-page="admin">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="siteNav"></div>
+
+  <main id="main">
+    <div class="container">
+      <div class="dash-shell" id="adminShell">
+
+        <!-- ================= Sidebar ================= -->
+        <aside class="dash-sidebar" id="adminSidebar" aria-label="Admin sections">
+          <div class="d-flex align-items-center gap-2 px-2 pb-3 border-bottom" style="border-color:var(--fg-line)!important">
+            <div class="d-flex align-items-center gap-2 w-100" id="adminUser"></div>
+          </div>
+
+          <p class="dash-group-label mb-0">MONITOR</p>
+          <nav class="d-grid gap-1">
+            <a class="dash-link" href="#overview" data-view="overview"><i class="bi bi-speedometer2"></i>Dashboard</a>
+            <a class="dash-link" href="#reports" data-view="reports"><i class="bi bi-graph-up-arrow"></i>Reports</a>
+          </nav>
+
+          <p class="dash-group-label mb-0">CONTENT</p>
+          <nav class="d-grid gap-1">
+            <a class="dash-link" href="#games" data-view="games"><i class="bi bi-controller"></i>Games</a>
+            <a class="dash-link" href="#news" data-view="news"><i class="bi bi-newspaper"></i>News</a>
+            <a class="dash-link" href="#reviews" data-view="reviews"><i class="bi bi-star"></i>Reviews</a>
+            <a class="dash-link" href="#categories" data-view="categories"><i class="bi bi-tags"></i>Categories</a>
+          </nav>
+
+          <p class="dash-group-label mb-0">PEOPLE &amp; SYSTEM</p>
+          <nav class="d-grid gap-1">
+            <a class="dash-link" href="#users" data-view="users"><i class="bi bi-people"></i>Members</a>
+            <a class="dash-link" href="#settings" data-view="settings"><i class="bi bi-gear"></i>Settings</a>
+            <a class="dash-link" href="dashboard.html"><i class="bi bi-person"></i>My dashboard</a>
+            <button class="dash-link border-0 bg-transparent text-start w-100" type="button" data-action="logout">
+              <i class="bi bi-box-arrow-right"></i>Sign out
+            </button>
+          </nav>
+
+          <div class="glass p-3 mt-4 small">
+            <p class="mb-1 fw-semibold" style="color:var(--fg-text)">Simulation only</p>
+            <p class="mb-2 text-dim">Records live in <code>localStorage</code>. No API, no database.</p>
+            <button class="btn btn-ghost btn-sm w-100" type="button" id="resetDemo">
+              <i class="bi bi-arrow-counterclockwise"></i>Reset demo data
+            </button>
+          </div>
+        </aside>
+
+        <!-- ================= Views ================= -->
+        <div>
+
+          <!-- Overview -->
+          <section class="dash-view" id="view-overview" aria-labelledby="h-admin-overview">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-admin-overview" class="mb-1">Dashboard</h2>
+              <p class="small text-dim mb-3">Snapshot of the catalogue, editorial output and membership.</p>
+              <div class="row g-3" id="adminMetrics"></div>
+            </div>
+
+            <div class="row g-3 g-lg-4 mt-0">
+              <div class="col-xl-7">
+                <div class="dash-panel h-100">
+                  <h3 class="mb-1">Monthly page views</h3>
+                  <p class="small text-dim mb-3">Thousands of sessions, last seven months.</p>
+                  <div class="bar-chart" id="trafficChart" role="img" aria-label="Bar chart of monthly page views, rising from 412k in March to 604k in September"></div>
+                </div>
+              </div>
+              <div class="col-xl-5">
+                <div class="dash-panel h-100">
+                  <h3 class="mb-1">Audience by platform</h3>
+                  <p class="small text-dim mb-3">Share of readers by primary platform.</p>
+                  <div class="donut" id="platformDonut"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-panel mt-3">
+              <h3 class="mb-3">Activity log</h3>
+              <div id="adminActivity"></div>
+            </div>
+          </section>
+
+          <!-- Games -->
+          <section class="dash-view" id="view-games" hidden aria-labelledby="h-admin-games">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-admin-games">Games management</h2>
+                  <p class="small text-dim mb-0" id="gamesCount">0 records</p>
+                </div>
+                <button class="btn btn-neon btn-sm" type="button" id="addGameBtn"><i class="bi bi-plus-lg"></i>Add game</button>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-8">
+                  <label class="visually-hidden" for="adminGameSearch">Search games</label>
+                  <input class="form-control" type="search" id="adminGameSearch" placeholder="Search by title, genre or platform…">
+                </div>
+                <div class="col-md-4">
+                  <label class="visually-hidden" for="adminGameSort">Sort games</label>
+                  <select class="form-select" id="adminGameSort">
+                    <option value="title">Sort: title A–Z</option>
+                    <option value="rating">Sort: highest rated</option>
+                    <option value="newest">Sort: newest release</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="table-responsive table-responsive-stack">
+                <table class="table-fg">
+                  <thead>
+                    <tr>
+                      <th scope="col">Game</th><th scope="col">Genre</th><th scope="col">Platforms</th>
+                      <th scope="col">Score</th><th scope="col">Released</th><th scope="col">Status</th>
+                      <th scope="col" class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gamesTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- News -->
+          <section class="dash-view" id="view-news" hidden aria-labelledby="h-admin-news">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-admin-news">News management</h2>
+                  <p class="small text-dim mb-0">Edit, publish or remove editorial articles.</p>
+                </div>
+                <button class="btn btn-neon btn-sm" type="button" id="addNewsBtn"><i class="bi bi-plus-lg"></i>Add article</button>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-8">
+                  <label class="visually-hidden" for="adminNewsSearch">Search articles</label>
+                  <input class="form-control" type="search" id="adminNewsSearch" placeholder="Search headlines and authors…">
+                </div>
+                <div class="col-md-4">
+                  <label class="visually-hidden" for="adminNewsCategory">Filter by category</label>
+                  <select class="form-select" id="adminNewsCategory"><option value="all">All categories</option></select>
+                </div>
+              </div>
+
+              <div class="table-responsive table-responsive-stack">
+                <table class="table-fg">
+                  <thead>
+                    <tr>
+                      <th scope="col">Headline</th><th scope="col">Category</th><th scope="col">Author</th>
+                      <th scope="col">Date</th><th scope="col">Status</th><th scope="col" class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="newsTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reviews -->
+          <section class="dash-view" id="view-reviews" hidden aria-labelledby="h-admin-reviews">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-admin-reviews" class="mb-1">Reviews</h2>
+              <p class="small text-dim mb-3">Published scores are read-only in this demo.</p>
+              <div class="table-responsive table-responsive-stack">
+                <table class="table-fg">
+                  <thead>
+                    <tr>
+                      <th scope="col">Game</th><th scope="col">Score</th><th scope="col">Reviewer</th>
+                      <th scope="col">Platform</th><th scope="col">Published</th><th scope="col" class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reviewTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Categories -->
+          <section class="dash-view" id="view-categories" hidden aria-labelledby="h-admin-cats">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-admin-cats" class="mb-1">Categories</h2>
+              <p class="small text-dim mb-3">Genre taxonomy used across the catalogue and filters.</p>
+              <div class="table-responsive table-responsive-stack">
+                <table class="table-fg">
+                  <thead>
+                    <tr>
+                      <th scope="col">Category</th><th scope="col">Slug</th><th scope="col">Description</th>
+                      <th scope="col">Games</th><th scope="col" class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="categoryTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Members -->
+          <section class="dash-view" id="view-users" hidden aria-labelledby="h-admin-users">
+            <div class="dash-panel">
+              <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <div>
+                  <div class="rule"></div>
+                  <h2 id="h-admin-users">Members</h2>
+                  <p class="small text-dim mb-0">Demo member records with roles and status.</p>
+                </div>
+                <button class="btn btn-neon btn-sm" type="button" id="addUserBtn"><i class="bi bi-person-plus"></i>Add member</button>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-8">
+                  <label class="visually-hidden" for="adminUserSearch">Search members</label>
+                  <input class="form-control" type="search" id="adminUserSearch" placeholder="Search by username, email or role…">
+                </div>
+                <div class="col-md-4">
+                  <label class="visually-hidden" for="adminUserRole">Filter by role</label>
+                  <select class="form-select" id="adminUserRole">
+                    <option value="all">All roles</option>
+                    <option value="Member">Member</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Administrator">Administrator</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="table-responsive table-responsive-stack">
+                <table class="table-fg">
+                  <thead>
+                    <tr>
+                      <th scope="col">Member</th><th scope="col">Email</th><th scope="col">Role</th>
+                      <th scope="col">Joined</th><th scope="col">Status</th><th scope="col" class="text-end">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="usersTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reports -->
+          <section class="dash-view" id="view-reports" hidden aria-labelledby="h-admin-reports">
+            <div class="row g-3 g-lg-4">
+              <div class="col-xl-6">
+                <div class="dash-panel h-100">
+                  <div class="rule"></div>
+                  <h2 id="h-admin-reports" class="mb-1">Top rated titles</h2>
+                  <p class="small text-dim mb-3">Highest scoring games currently in the catalogue.</p>
+                  <div id="reportBars"></div>
+                </div>
+              </div>
+              <div class="col-xl-6">
+                <div class="dash-panel h-100">
+                  <h2 class="mb-1">Traffic &amp; engagement</h2>
+                  <p class="small text-dim mb-3">Rolling 30-day figures against the previous period.</p>
+                  <div class="table-responsive table-responsive-stack">
+                    <table class="table-fg">
+                      <thead><tr><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">Change</th></tr></thead>
+                      <tbody id="reportSummary"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Settings -->
+          <section class="dash-view" id="view-settings" hidden aria-labelledby="h-admin-settings">
+            <div class="dash-panel">
+              <div class="rule"></div>
+              <h2 id="h-admin-settings" class="mb-1">Site settings</h2>
+              <p class="small text-dim mb-4">Cosmetic in this demo — submitting only raises a toast.</p>
+
+              <form id="adminSettingsForm" class="row g-3" novalidate>
+                <div class="col-md-6">
+                  <label class="form-label" for="siteName">Site name</label>
+                  <input class="form-control" type="text" id="siteName" value="Forza Gaming">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="siteTagline">Tagline</label>
+                  <input class="form-control" type="text" id="siteTagline" value="Games, news and hardware, without the noise">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="itemsPerPage">Items per page</label>
+                  <select class="form-select" id="itemsPerPage">
+                    <option>8</option><option selected>12</option><option>24</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="defaultRole">Default role for new members</label>
+                  <select class="form-select" id="defaultRole">
+                    <option selected>Member</option><option>Moderator</option><option>Editor</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="siteNotice">Front-page notice</label>
+                  <textarea class="form-control" id="siteNotice" rows="3">All content on this site is fictional demo data created for a portfolio project.</textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="allowRegistration" checked>
+                    <label class="form-check-label" for="allowRegistration">Allow new demo registrations</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="moderateComments" checked>
+                    <label class="form-check-label" for="moderateComments">Hold community posts for moderation</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-neon" type="submit"><i class="bi bi-check2"></i>Save settings</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= Game modal ================= -->
+  <div class="modal fade" id="gameModal" tabindex="-1" aria-labelledby="gameModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="gameForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="gameModalTitle">Add a game</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="recordId">
+            <div class="mb-3">
+              <label class="form-label" for="gameTitle">Title</label>
+              <input class="form-control" type="text" id="gameTitle" name="title" required>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="gameGenre">Genre</label>
+                <select class="form-select" id="gameGenre" name="genre">
+                  <option>Action</option><option>Adventure</option><option>RPG</option><option>Horror</option>
+                  <option>Racing</option><option>Sports</option><option>Strategy</option>
+                  <option>Open World</option><option>FPS</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="gameRating">Score</label>
+                <input class="form-control" type="number" id="gameRating" name="rating" min="0" max="10" step="0.1">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="gameReleased">Release date</label>
+                <input class="form-control" type="date" id="gameReleased" name="released">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="gameStatus">Status</label>
+                <select class="form-select" id="gameStatus" name="status">
+                  <option>Published</option><option>Draft</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="gamePlatforms">Platforms</label>
+                <input class="form-control" type="text" id="gamePlatforms" name="platforms" placeholder="PC, PS5, XSX">
+                <div class="form-text">Comma separated short names.</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-neon" type="submit">Save game</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= News modal ================= -->
+  <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="newsForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="newsModalTitle">Add an article</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="recordId">
+            <div class="mb-3">
+              <label class="form-label" for="newsTitle">Headline</label>
+              <input class="form-control" type="text" id="newsTitle" name="title" required>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="newsCategory">Category</label>
+                <select class="form-select" id="newsCategory" name="category">
+                  <option>PC</option><option>PlayStation</option><option>Xbox</option><option>Nintendo</option>
+                  <option>Mobile</option><option>Esports</option>
+                  <option>Gaming Hardware</option><option>Industry News</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="newsAuthor">Author</label>
+                <input class="form-control" type="text" id="newsAuthor" name="author">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="newsDate">Publish date</label>
+                <input class="form-control" type="date" id="newsDate" name="date">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="newsStatus">Status</label>
+                <select class="form-select" id="newsStatus" name="status">
+                  <option>Published</option><option>Featured</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-neon" type="submit">Save article</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Member modal ================= -->
+  <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="userForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalTitle">Add a member</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="recordId">
+            <div class="mb-3">
+              <label class="form-label" for="userName">Username</label>
+              <input class="form-control" type="text" id="userName" name="username" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="userEmail">Email address</label>
+              <input class="form-control" type="email" id="userEmail" name="email" required>
+            </div>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="userRole">Role</label>
+                <select class="form-select" id="userRole" name="role">
+                  <option>Member</option><option>Moderator</option><option>Editor</option><option>Administrator</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="userStatus">Status</label>
+                <select class="form-select" id="userStatus" name="status">
+                  <option>Active</option><option>Pending</option><option>Suspended</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-neon" type="submit">Save member</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Delete confirmation ================= -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalTitle">Delete record</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1">Remove <strong id="deleteTarget">this record</strong> from the demo data?</p>
+          <p class="small text-dim mb-0">Use “Reset demo data” in the sidebar to bring everything back.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" type="button" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger-soft" type="button" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="siteFooter"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

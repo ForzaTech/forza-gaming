@@ -1,0 +1,110 @@
+/* ==========================================================================
+   FORZA GAMING — Responsive adjustments
+   Mobile-first base lives in style.css; this file tunes each breakpoint.
+   Breakpoints follow Bootstrap 5: sm 576, md 768, lg 992, xl 1200, xxl 1400
+   ========================================================================== */
+
+/* --- Large screens (1400px+) --------------------------------------------- */
+@media (min-width: 1400px) {
+  .container, .container-xl { max-width: 1320px; }
+  .hero { min-height: min(88vh, 900px); }
+  body { font-size: 16.5px; }
+}
+
+/* --- Desktop down to laptop (< 1200px) ----------------------------------- */
+@media (max-width: 1199.98px) {
+  .fg-nav .nav-link { padding: .45rem .6rem; font-size: .92rem; }
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Tablet landscape / small laptop (< 992px) --------------------------- */
+@media (max-width: 991.98px) {
+  .hero { min-height: auto; padding: 7.5rem 0 3rem; }
+  .hero .hero-copy { max-width: 100%; }
+  .split { grid-template-columns: 1fr; }
+  .section { padding: 3rem 0; }
+  .page-banner { padding: 6rem 0 2.25rem; }
+  .fg-footer { padding-top: 2.5rem; }
+  .dash-shell { grid-template-columns: 1fr; }
+  .dash-sidebar {
+    position: static;
+    height: auto;
+    display: flex;
+    gap: .5rem;
+    overflow-x: auto;
+    padding: .7rem;
+    border-radius: var(--fg-radius);
+  }
+  .dash-sidebar .dash-link { white-space: nowrap; }
+  .dash-sidebar .dash-group-label { display: none; }
+}
+
+/* --- Tablet portrait (< 768px) ------------------------------------------- */
+@media (max-width: 767.98px) {
+  body { font-size: 15.5px; }
+  h1 { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+  .section-head { align-items: flex-start; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .hero-meta { gap: .4rem; }
+  .hero .btn { width: 100%; }
+  .hero .hero-actions { width: 100%; }
+  .media-frame { border-radius: var(--fg-radius); }
+  .play-btn { width: 60px; height: 60px; font-size: 1.25rem; }
+  .avatar-lg { width: 76px; height: 76px; }
+  .stat { padding: 1rem .8rem; }
+  .card-fg .body { padding: .9rem 1rem 1rem; }
+  .toast-stack { right: .75rem; left: .75rem; bottom: .75rem; width: auto; }
+  .table-responsive-stack thead { display: none; }
+  .table-responsive-stack tr {
+    display: block;
+    border: 1px solid var(--fg-line);
+    border-radius: var(--fg-radius);
+    margin-bottom: .75rem;
+    padding: .4rem .2rem;
+  }
+  .table-responsive-stack td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 0;
+    padding: .45rem .8rem;
+  }
+  .table-responsive-stack td::before {
+    content: attr(data-label);
+    color: var(--fg-dim);
+    font-size: .8rem;
+    font-weight: 500;
+  }
+}
+
+/* --- Phones (< 576px) ----------------------------------------------------- */
+@media (max-width: 575.98px) {
+  .section { padding: 2.4rem 0; }
+  .page-banner { padding: 5.5rem 0 1.8rem; }
+  .hero { padding: 6.5rem 0 2.5rem; }
+  .hero-eyebrow { font-size: .72rem; }
+  .pill-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .4rem; scrollbar-width: none; }
+  .pill-row::-webkit-scrollbar { display: none; }
+  .gallery { grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+  .fg-logo { font-size: 1.08rem; }
+  .fg-logo .mark { width: 30px; height: 30px; font-size: .95rem; }
+  .icon-btn { width: 36px; height: 36px; font-size: .95rem; }
+  .score { min-width: 46px; font-size: 1rem; }
+  .row-item { flex-wrap: wrap; gap: .7rem; }
+  .auth-card { padding: 1.4rem 1.1rem; }
+  .to-top { width: 40px; height: 40px; bottom: .75rem; right: .75rem; }
+  .fg-footer { text-align: left; }
+}
+
+/* --- Very small phones ---------------------------------------------------- */
+@media (max-width: 380px) {
+  .fg-logo .word { font-size: .95rem; }
+  .btn { padding: .55rem 1rem; }
+}
+
+/* --- Print ---------------------------------------------------------------- */
+@media print {
+  .fg-nav, .fg-footer, .to-top, .toast-stack, .fav-btn, .btn { display: none !important; }
+  body { background: #fff; color: #000; }
+  body::before, body::after { display: none; }
+}

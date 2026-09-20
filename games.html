@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Games library — Forza Gaming</title>
+  <meta name="description" content="Search, filter and sort the Forza Gaming library by genre, platform, score and release year.">
+  <meta property="og:title" content="Games library — Forza Gaming">
+  <meta property="og:description" content="Filter by genre, platform, score and year to find your next game.">
+  <meta property="og:image" content="https://picsum.photos/seed/forza-og/1200/630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body data-page="games">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="siteNav"></div>
+
+  <main id="main">
+    <header class="page-banner">
+      <div class="container">
+        <nav class="crumbs mb-3" aria-label="Breadcrumb"><a href="index.html">Home</a> / <span>Games</span></nav>
+        <div class="rule"></div>
+        <h1 class="mb-2">Games library</h1>
+        <p class="mb-0">Everything we cover, with the filters you actually need. Your favorites are saved in this browser.</p>
+      </div>
+    </header>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="glass p-3 p-lg-4 mb-4">
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-4">
+              <label class="form-label" for="searchGames">Search the library</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="search" class="form-control" id="searchGames" placeholder="Title, studio or keyword">
+              </div>
+            </div>
+            <div class="col-6 col-lg-2">
+              <label class="form-label" for="platformFilter">Platform</label>
+              <select class="form-select" id="platformFilter"></select>
+            </div>
+            <div class="col-6 col-lg-2">
+              <label class="form-label" for="ratingFilter">Minimum score</label>
+              <select class="form-select" id="ratingFilter">
+                <option value="0">Any score</option>
+                <option value="7">7.0 and above</option>
+                <option value="8">8.0 and above</option>
+                <option value="9">9.0 and above</option>
+              </select>
+            </div>
+            <div class="col-6 col-lg-2">
+              <label class="form-label" for="yearFilter">Release year</label>
+              <select class="form-select" id="yearFilter"></select>
+            </div>
+            <div class="col-6 col-lg-2">
+              <label class="form-label" for="sortSelect">Sort by</label>
+              <select class="form-select" id="sortSelect">
+                <option value="rating">Highest rated</option>
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="az">A to Z</option>
+                <option value="za">Z to A</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
+            <div class="pill-row" id="genreFilters" role="group" aria-label="Filter by genre"></div>
+            <button class="btn btn-ghost btn-sm" id="clearFilters"><i class="bi bi-arrow-counterclockwise me-1"></i>Clear filters</button>
+          </div>
+        </div>
+
+        <p class="text-dim small mb-3" id="resultCount" role="status" aria-live="polite"></p>
+        <div class="row g-3 g-lg-4" id="gameGrid"></div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-neon" id="loadMore" hidden>Load more games</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/favorites.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/games.js"></script>
+</body>
+</html>
